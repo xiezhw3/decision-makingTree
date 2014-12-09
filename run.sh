@@ -2,7 +2,7 @@ g++ -std=c++11 -o src/decisongMakingTreeMaker src/decisongMakingTreeMaker.cpp
 g++ -std=c++11 -o src/calResult src/calResult.cpp
 g++ -std=c++11 -o src/prepareBeforePredict src/prepareBeforePredict.cpp
 
-if [ ! -d "$result" ]; then
+if [ ! -d "result" ]; then
   mkdir result
 fi
 
