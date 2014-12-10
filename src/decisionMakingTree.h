@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <queue>
+#include <memory>
 
 #define THRESHOLD 0.45
 #define THRESHOLDRATIO 0.60
@@ -15,13 +16,11 @@ class DecisonMakingTree {
 public:
 	DecisonMakingTree() { }
 	DecisonMakingTree(Table &table_, int sourceIndex_ = 0) {
-		root = new Node(0, sourceIndex_);
+		root = shared_ptr<Node> (new Node(0, sourceIndex_));
 		root->table = new Table(table_);
 	}
 
-	~DecisonMakingTree() {
-		root = nullptr;
-	}
+	~DecisonMakingTree() { }
 
 	DecisonMakingTree& operator= (DecisonMakingTree &tree) {
 		informationGain = tree.informationGain;
@@ -30,12 +29,12 @@ public:
 	}
 
 	void initTree(Table &table, int sourceIndex_) {
-		root = new Node(0, sourceIndex_);
+		root = shared_ptr<Node> (new Node(0, sourceIndex_));
 		root->table = new Table(table);
 	}
 
 	// get the frequence of each classes
-	map<string, int> getClassesAndFrequence(Node *root_) {
+	map<string, int> getClassesAndFrequence(shared_ptr<Node> &root_) {
 		map<string, int> classesAndFrequence;
 		if (root_ != nullptr && root_->table != nullptr) {
 			Table tableTemp = *(root_->table);
@@ -48,7 +47,7 @@ public:
 	}
 
 	// get the sign of each node
-	string findSign(Node *root_) {
+	string findSign(shared_ptr<Node> &root_) {
 		if (root_ == nullptr || root_->table == nullptr)
 			return "";
 		map<string, int> classesAndFrequence = getClassesAndFrequence(root_);
@@ -66,14 +65,14 @@ public:
 	}
 
 	// the classes has only one kind
-	bool isOneClassesNode(Node *root_) {
+	bool isOneClassesNode(shared_ptr<Node> &root_) {
 		map<string, int> classesAndFrequence = getClassesAndFrequence(root_);
 		if (classesAndFrequence.size() == 1)
 			return true;
 		return false;
 	}
 
-	void ID3(Node *root_) {
+	void ID3(shared_ptr<Node> &root_) {
 		if (isTheSingleClasses(root_))
 			return;
 
@@ -109,7 +108,7 @@ public:
 		}
 	}
 
-	void C4_5(Node *root_) {
+	void C4_5(shared_ptr<Node> &root_) {
 		if (isTheSingleClasses(root_))
 			return;
 
@@ -144,13 +143,13 @@ public:
 	}
 
 	// refresh the information gain calculator
-	void setInformationGain (Node *root_) {
+	void setInformationGain (shared_ptr<Node> &root_) {
 		Table tableTemp = *(root_->table);
 		informationGain.setTable(tableTemp);
 		informationGain.setSourceIndex(root_->sourceIndex);
 	}
 
-	bool isTheSingleClasses(Node *root_) {
+	bool isTheSingleClasses(shared_ptr<Node> &root_) {
 		if (root_ == nullptr || root_->table == nullptr)
 			return true;
 
@@ -163,7 +162,7 @@ public:
 	}
 
 	// cut the table of root
-	void cutTable(Node *root_) {
+	void cutTable(shared_ptr<Node> &root_) {
 		Table tableTemp = *(root_->table);
 		map<string, vector<Row> > subTable;
 		vector<string> bestFeatureCol = tableTemp.getCol(root_->featureIndex);
@@ -188,7 +187,7 @@ public:
 			if (sourceIndexTemp > root_->featureIndex)
 				sourceIndexTemp--;
 
-			Node *n = new Node(0, sourceIndexTemp);
+			shared_ptr<Node> n = shared_ptr<Node> (new Node(0, sourceIndexTemp));
 			n->featureValue = i.first;
 			n->table = t;
 			root_->subNode.push_back(n);
@@ -203,19 +202,13 @@ public:
 		C4_5(root);
 	}
 
-	Node *getRoot() const{
+	shared_ptr<Node> &getRoot(){
 		return root;
 	}
 
-	void setRoot(Node *root_) {
-		if (root_ == nullptr)
-			if (root != nullptr)
-				delete root;
-		root = root_;
-	}
 private:
 	InformationGain informationGain;
-	Node *root;
+	shared_ptr<Node> root;
 };
 
 #endif

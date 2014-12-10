@@ -10,7 +10,7 @@ struct Node{
 	string featureValue;
 	string sign;
 	Table *table;
-	vector< Node* > subNode;
+	vector< shared_ptr<Node> > subNode;
 };
 
 #endif

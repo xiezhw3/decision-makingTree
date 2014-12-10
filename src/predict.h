@@ -39,7 +39,7 @@ public:
 		for (int i = 0; i != rowNum; ++i) {
 			Row row = table.getRow(i);
 			
-			Node *nodeTemp = tree.getRoot();
+			shared_ptr<Node> nodeTemp = tree.getRoot();
 			while (nodeTemp != nullptr && nodeTemp->subNode.size() != 0) {
 				// string featureColName = j->featureName; 
 				string featureValue = row.getElement(featureValueMapindex[nodeTemp->featureName]);

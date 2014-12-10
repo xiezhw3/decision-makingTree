@@ -13,16 +13,14 @@
 class PruningOfTree{
 public:
 	PruningOfTree() { }
-	~PruningOfTree() {
-		tree.setRoot(nullptr);
-	}
+	~PruningOfTree() { }
 
 	void setTree(DecisonMakingTree &tree_) {
 		tree = tree_;
 	}
 
 	// in here, use shared_par will be better
-	void pruningTree(Node *TreeRoot) {
+	void pruningTree(shared_ptr<Node> &TreeRoot) {
 		if (TreeRoot == nullptr || (TreeRoot->subNode.size() == 0))
 			return;
 		for (auto &i : TreeRoot->subNode) {
@@ -32,14 +30,14 @@ public:
 		}
 
 		double beforeCutSubTree = getEmpiricalEntropyOfTree(tree.getRoot());
-		vector< Node* > subTree = TreeRoot->subNode;
+		vector< shared_ptr<Node> > subTree = TreeRoot->subNode;
 
 		// cut the sub tree
-		stack< Node * > s;
+		stack< shared_ptr<Node> > s;
 		s.push(TreeRoot);
 		TreeRoot->table = new Table();
 		while (!s.empty()) {
-			Node *current = s.top();
+			shared_ptr<Node> current = s.top();
 			s.pop();
 			if (current->subNode.size() == 0) {
 				*(TreeRoot->table) = TreeRoot->table->addSource(*(current->table), TreeRoot->sourceIndex);
@@ -64,16 +62,15 @@ public:
 		}
 	}
 
-	void deleteSubTree(vector< Node* > subTree) {
+	void deleteSubTree(vector< shared_ptr<Node> > &subTree) {
 		for (auto &i : subTree) {
-			stack< Node * > s;
+			stack< shared_ptr<Node>> s;
 			s.push(i);
 			while (!s.empty()) {
-				Node *current = s.top();
+				shared_ptr<Node> current = s.top();
 				s.pop();
 				if (current->subNode.size() == 0) {
 					delete current->table;
-					delete current;
 				} else {
 					for (auto &j : current->subNode) {
 						s.push(j);
@@ -83,13 +80,13 @@ public:
 		}
 	}
 
-	double getEmpiricalEntropyOfTree(Node *root_) {
+	double getEmpiricalEntropyOfTree(shared_ptr<Node> &root_) {
 		double entropyOfTree = 0.0;
 		int leafNum = 0;
-		stack< Node * > s;
+		stack< shared_ptr<Node> > s;
 		s.push(root_);
 		while (!s.empty()) {
-			Node *current = s.top();
+			shared_ptr<Node> current = s.top();
 			s.pop();
 			if (current->subNode.size() == 0) {
 				leafNum++;
@@ -104,7 +101,7 @@ public:
 		return entropyOfTree + ALPHA * leafNum;
 	}
 
-	void setInformationGain (Node *root_) {
+	void setInformationGain (shared_ptr<Node> &root_) {
 		entropy.setTable(*(root_->table));
 		entropy.setSourceIndex(root_->sourceIndex);
 	}
