@@ -1,3 +1,12 @@
+/**
+ * @file informationGain.h
+ * @description Caculate the infoemationGain of the decision-making tree
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef INFORMATIONGAIN_H
 #define INFORMATIONGAIN_H
 

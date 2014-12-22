@@ -1,3 +1,12 @@
+/**
+ * @file pruningOfTheTree.h
+ * @description Make purning of the tree
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef PRUNINGOFTREE_H
 #define PRUNINGOFTREE_H
 
@@ -8,7 +17,7 @@
 #include <vector>
 #include <stack>
 
-#define ALPHA 0.7
+#define ALPHA 0.01
 
 class PruningOfTree{
 public:

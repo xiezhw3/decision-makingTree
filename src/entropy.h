@@ -1,3 +1,12 @@
+/**
+ * @file entropy.h
+ * @description calculate the entropy
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef ENTROPY_H
 #define ENTROPY_H
 

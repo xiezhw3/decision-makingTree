@@ -1,3 +1,12 @@
+/**
+ * @file node.h
+ * @description The node struct of the tree
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef NODE_H
 #define NODE_H
 

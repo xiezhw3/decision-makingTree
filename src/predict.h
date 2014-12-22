@@ -1,3 +1,12 @@
+/**
+ * @file predict.h
+ * @description Predict the result by feature 
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef PREDICT_H
 #define PREDICT_H
 

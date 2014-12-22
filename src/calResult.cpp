@@ -1,34 +1,25 @@
-/*
-	calculate the precision rate
-*/
+/**
+ * @file calResult.cpp
+ * @description calculate the result of algorithm
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include "fileProcesser.h" 
 
 using namespace std;
 
-vector<string> readFile(const string &filePath) {
-	vector<string> readResult;
-	ifstream in(filePath);
-	if (!in.is_open()){ 
-		cout << "Error opening file" << endl; 
-		exit (1); 
-	}
-
-	char line[1024];
-	while (in.getline(line, sizeof(line))) {
-		string word(line);
-		readResult.push_back(word);
-	}
-	in.close();
-	return readResult;
-}
 
 double getPrecisionRate(const string &filePath1, const string &filePath2) {
-	vector<string> predictResult = readFile(filePath1);
-	vector<string> sourceresult = readFile(filePath2);
+	FileProcesser fileProcess;
+	vector<string> predictResult = fileProcess.readFileFormPredict(filePath1);
+	vector<string> sourceresult = fileProcess.readFileFormPredict(filePath2);
 	int rightNum;
 	int size = predictResult.size();
 	for (int i = 0; i != size; ++i)

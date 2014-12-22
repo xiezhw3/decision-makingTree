@@ -1,50 +1,32 @@
+/**
+ * @file prepareBeforePredict.cpp
+ * @description The data predict before all algotithm
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include "fileProcesser.h" 
 
 using namespace std;
-
-vector<string> readFile(const string &filePath) {
-	vector<string> readResult;
-	ifstream in(filePath);
-	if (!in.is_open()){ 
-		cout << "Error opening file" << endl; 
-		exit (1); 
-	}
-
-	char line[1024];
-	while (in.getline(line, sizeof(line))) {
-		string word(line);
-		readResult.push_back(word);
-	}
-	in.close();
-	return readResult;
-}
 
 void getRandomFile(vector<string> &sourceDataSet, vector<string> &dataSet, vector<string> &testData, int seed) {
 	testData.clear();
 	dataSet.clear();
 	dataSet = sourceDataSet;
-	for (int i = 0; i < 100; ++i) {
+	for (int i = 0; i < 335; ++i) {
 		srand(time(0) + seed);
     	int index = rand() % dataSet.size();
     	testData.push_back(dataSet[index]);
     	dataSet.erase(dataSet.begin() + index);
 	}
-}
-
-void writeToFile(const string &filePath, vector<string> &data) {
-	ofstream out(filePath);
-	if (!out.is_open()){ 
-		cout << "Error opening file" << endl; 
-		exit (1); 
-	}
-	for (auto &i : data)
-		out << i << endl;
-	out.close();
 }
 
 int main(int argc, char const *argv[])
@@ -58,8 +40,8 @@ int main(int argc, char const *argv[])
 				break;
 			times = times * 10 + (int)(argv[2][i] - '0');
 		}
-
-		vector<string> sourceDataSet = readFile(argv[1]);
+		FileProcesser fileProcess;
+		vector<string> sourceDataSet = fileProcess.readFileFormPredict(argv[1]);
 		for (int i = 0; i != times; ++i) {
 			vector<string> dataSet, testData;
 			getRandomFile(sourceDataSet, dataSet, testData, i);
@@ -74,8 +56,8 @@ int main(int argc, char const *argv[])
 				dataSetFile.push_back(num[j]);
 				testDataFile.push_back(num[j]);
 			}
-			writeToFile(dataSetFile, dataSet);
-			writeToFile(testDataFile, testData);
+			fileProcess.writeToFile(dataSetFile, dataSet);
+			fileProcess.writeToFile(testDataFile, testData);
 		}
 	}
 	return 0;

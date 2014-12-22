@@ -1,3 +1,12 @@
+/**
+ * @file decisionMakingTree.h
+ * @description make the decrision-making tree
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef DECISIONMAKINGTREE_H
 #define DECISIONMAKINGTREE_H
 
@@ -10,7 +19,7 @@
 #include <memory>
 
 #define THRESHOLD 0.45
-#define THRESHOLDRATIO 0.60
+#define THRESHOLDRATIO 0.45
 
 class DecisonMakingTree {
 public:

@@ -1,3 +1,12 @@
+/**
+ * @file table.h
+ * @description The table struct of the tree
+ * @author Zhiwang Xie
+ * @mail xiezhiw3@gmail.com
+ * @github https://github.com/xiezhw3
+ * @data Dec 18 2014
+ **/
+
 #ifndef TABLE_H
 #define TABLE_H
 
@@ -80,7 +89,6 @@ public:
 	string getElement(int index) const {
 		if (index >= 0 && index < colNum)
 			return element[index];
-		cout << ">>>>>>>: " << index << " r: " << colNum << endl;
 		return "";
 	}
 
